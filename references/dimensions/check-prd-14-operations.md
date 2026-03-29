@@ -1,6 +1,6 @@
 # 运营方案与效果跟踪检查
 
-> 本文件是 check-prd.md 的子检查模块，单独使用时请先提供待检查的PRD内容。
+> Supporting reference for the `check-prd` skill. 在执行运营方案与效果跟踪检查时加载；单独使用时请先提供待检查的 PRD 内容。
 
 ## 维度说明
 

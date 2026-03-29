@@ -1,22 +1,31 @@
 # check-prd skill installer for Windows (PowerShell)
 
-$target = "$env:USERPROFILE\.claude\skills"
+$source = Split-Path -Parent $MyInvocation.MyCommand.Path
+$target = Join-Path $env:USERPROFILE ".claude\skills\check-prd"
+$python = Get-Command py -ErrorAction SilentlyContinue
 
-Write-Host "Installing check-prd skill..."
-Write-Host "Target: $target"
-
-New-Item -ItemType Directory -Force -Path $target | Out-Null
-
-$files = Get-Item "check-prd*.md"
-foreach ($file in $files) {
-    Copy-Item $file.FullName $target
+if (-not $python) {
+    $python = Get-Command python -ErrorAction SilentlyContinue
 }
 
-$count = $files.Count
+if (-not $python) {
+    Write-Error "Python 3 is required to install this skill."
+    exit 1
+}
+
+Write-Host "Installing check-prd skill..."
+Write-Host "Source: $source"
+Write-Host "Target: $target"
+
+if ($python.Name -eq "py") {
+    & py -3 (Join-Path $source "scripts\install_skill.py") --source $source --target $target
+} else {
+    & python (Join-Path $source "scripts\install_skill.py") --source $source --target $target
+}
+
 Write-Host ""
-Write-Host "Done! $count files installed to $target"
-Write-Host ""
+Write-Host "Done!"
 Write-Host "Usage:"
 Write-Host "  1. Open Claude Code"
-Write-Host "  2. Switch to Opus: /model claude-opus-4-6"
+Write-Host "  2. Switch to Opus if you want deeper analysis: /model claude-opus-4-6"
 Write-Host "  3. Run: /check-prd your-prd-file.pdf"

@@ -1,6 +1,6 @@
 # 检查报告模板 + 检查执行指南
 
-> 本文件是 check-prd.md 的附录模块，提供标准化的检查报告模板和检查执行的最佳实践指南。
+> Supporting reference for the `check-prd` skill. 在所有维度检查完成后加载，用于生成汇总导航报告。
 
 ## 第一部分：检查报告模板
 

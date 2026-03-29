@@ -1,0 +1,42 @@
+[
+  {
+    "query": "帮我 review 一下这个 B 端 SaaS 的 PRD，我感觉权限、计费和多租户都写得不够扎实。",
+    "should_trigger": true
+  },
+  {
+    "query": "这个需求文档是给内部审批系统用的，你帮我从产品定位、流程设计和异常处理上挑问题。",
+    "should_trigger": true
+  },
+  {
+    "query": "我刚写完一个企业软件模块方案，想做一次系统性的 PRD 质量检查，看看还有哪些漏项。",
+    "should_trigger": true
+  },
+  {
+    "query": "请审一下这个 CRM 产品方案，按照 B 端产品方法论给我逐维度出问题清单。",
+    "should_trigger": true
+  },
+  {
+    "query": "我们在做一个带 AI Copilot 的运营后台，下面这份方案请你按 PRD review 的方式严格检查。",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我 review 这个 React 组件，看看状态管理和渲染性能有没有问题。",
+    "should_trigger": false
+  },
+  {
+    "query": "把这份周报润色成更像内部汇报的语气，不用改结构。",
+    "should_trigger": false
+  },
+  {
+    "query": "我有个数据库表设计，帮我补一个 SQL migration 脚本。",
+    "should_trigger": false
+  },
+  {
+    "query": "看看这个产品介绍页的文案和视觉层级哪里可以优化，重点是营销转化。",
+    "should_trigger": false
+  },
+  {
+    "query": "请帮我总结一下这份会议纪要，提炼待办和 owner。",
+    "should_trigger": false
+  }
+]
