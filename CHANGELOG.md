@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v2.1.0（2026-04-02）
+
+### README 重写
+
+- 新增"快速开始"章节，突出 `dist/check-prd-universal-prompt.md` 的使用方式
+- 明确标注适用于 ChatGPT、Gemini、DeepSeek、Kimi、通义千问等任意大模型，无需安装任何工具
+- Claude Code 安装说明降为二级内容，避免非 Claude 用户被劝退
+
 ## v2.0.0（2026-03-29）
 
 重构为标准现代 Claude skill 目录。
