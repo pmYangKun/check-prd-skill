@@ -9,6 +9,8 @@ from pathlib import Path
 IGNORE_PARTS = {
     ".git",
     "dist",
+    "docs",
+    "variants",
     "__pycache__",
     ".pytest_cache",
     ".mypy_cache",

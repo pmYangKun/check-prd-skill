@@ -1,0 +1,12 @@
+{
+  "base_name": "PRD评审反馈库",
+  "base_token": "",
+  "runs_table_name": "评审轮次",
+  "runs_table_id": "",
+  "suggestions_table_name": "建议反馈明细",
+  "suggestions_table_id": "",
+  "waivers_table_name": "豁免台账",
+  "waivers_table_id": "",
+  "time_zone": "Asia/Shanghai",
+  "schema_version": "2.2"
+}

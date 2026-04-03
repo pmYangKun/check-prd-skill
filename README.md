@@ -80,6 +80,16 @@ scripts/install_skill.py             # 安装到 ~/.claude/skills/check-prd
 evals/                               # eval 种子
 ```
 
+## 协作扩展提案
+
+如果你希望把 `check-prd` 从“只产出评审结论”扩展成“飞书内评论回写、收集回复、确认修改、写回正文、沉淀反馈台账、判断是否可交付开发”的协作工作流，建议不要直接覆盖当前主 skill，而是单独维护一个分支：
+
+- 建议分支名：`check-prd-skill飞书CLI协作版`
+- 参考说明：[docs/feishu-cli-collaboration-proposal.md](docs/feishu-cli-collaboration-proposal.md)
+- 参考变体：[variants/feishu-prd-review-loop/](variants/feishu-prd-review-loop/)
+
+这个变体复用当前 `check-prd` 作为评审引擎，只额外补上 Feishu/Lark CLI 协作闭环，因此更适合作为并行分发版本，而不是主分支默认安装内容。
+
 ## 构建与校验
 
 如果修改了维度源文件，需要重新生成通用 Prompt：

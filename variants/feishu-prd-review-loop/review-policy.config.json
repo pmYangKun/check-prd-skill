@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0",
+  "review_profiles": {
+    "small": {
+      "label": "小需求",
+      "default_dimensions": ["01", "04", "05", "08", "09", "12"]
+    },
+    "medium": {
+      "label": "中需求",
+      "default_dimensions": ["01", "04", "05", "06", "08", "09", "11", "12"],
+      "triggered_dimensions": ["07", "10", "13", "14"]
+    },
+    "large": {
+      "label": "大需求",
+      "default_dimensions": "all_applicable"
+    }
+  },
+  "force_check_rules": [
+    {
+      "dimension_id": "07",
+      "dimension_name": "数据建模质量",
+      "trigger_label": "数据结构变化",
+      "signals": [
+        "新增数据实体",
+        "新增业务对象",
+        "关键字段变化",
+        "字段口径变化",
+        "状态机变化",
+        "枚举变化",
+        "关联关系变化",
+        "统计口径变化",
+        "导入导出口径变化",
+        "报表口径变化"
+      ]
+    },
+    {
+      "dimension_id": "06",
+      "dimension_name": "架构设计质量",
+      "trigger_label": "系统结构变化",
+      "signals": [
+        "跨模块联动",
+        "系统级方案",
+        "公共能力",
+        "外部系统集成",
+        "服务边界变化"
+      ]
+    },
+    {
+      "dimension_id": "13",
+      "dimension_name": "AI 功能设计质量",
+      "trigger_label": "智能能力",
+      "signals": [
+        "AI",
+        "LLM",
+        "推荐",
+        "生成",
+        "分类",
+        "摘要",
+        "智能助手"
+      ]
+    },
+    {
+      "dimension_id": "10",
+      "dimension_name": "商业分析深度",
+      "trigger_label": "商业规则变化",
+      "signals": [
+        "定价",
+        "套餐",
+        "试用",
+        "转化",
+        "客户分层",
+        "多租户",
+        "商业模式约束"
+      ]
+    },
+    {
+      "dimension_id": "08",
+      "dimension_name": "流程与角色设计",
+      "trigger_label": "流转与责任变化",
+      "signals": [
+        "角色变化",
+        "权限变化",
+        "审批变化",
+        "协作变化",
+        "流转规则变化"
+      ]
+    },
+    {
+      "dimension_id": "09",
+      "dimension_name": "交互设计质量",
+      "trigger_label": "界面与操作变化",
+      "signals": [
+        "页面变化",
+        "表单变化",
+        "弹窗变化",
+        "抽屉变化",
+        "列表变化",
+        "批量操作变化",
+        "反馈提示变化"
+      ]
+    },
+    {
+      "dimension_id": "14",
+      "dimension_name": "运营方案与效果跟踪",
+      "trigger_label": "上线后效果闭环",
+      "signals": [
+        "推广",
+        "培训",
+        "埋点",
+        "指标回收",
+        "效果复盘"
+      ]
+    }
+  ],
+  "score_mapping": {
+    "优秀": 100,
+    "合格": 80,
+    "待改进": 60,
+    "严重缺失": 30
+  },
+  "dimension_weights": {
+    "01": 1.0,
+    "04": 1.0,
+    "05": 1.0,
+    "06": 1.0,
+    "07": 1.0,
+    "08": 1.0,
+    "09": 1.0,
+    "10": 1.0,
+    "11": 1.0,
+    "12": 1.0,
+    "13": 1.0,
+    "14": 1.0
+  },
+  "delivery_gate": {
+    "required_conditions": [
+      "all_issues_replied",
+      "all_issues_processed"
+    ],
+    "score_is_advisory": true
+  }
+}
