@@ -1,4 +1,6 @@
-# feishu-prd-review-loop
+# feishu-prd-review-loop（飞书 CLI 协作版）
+
+> 本变体由 [@Scofy0123](https://github.com/Scofy0123) 基于标准版 `check-prd`（[main 分支](https://github.com/pmYangKun/check-prd-skill/tree/main)）扩展而来。感谢 Scofy0123 的贡献！
 
 `feishu-prd-review-loop` 是一个建立在 `check-prd` 之上的 Feishu/Lark 协作型变体。
 
