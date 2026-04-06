@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v2.2.1（2026-04-06）
+
+### 目录结构整理
+
+- 将根目录 `install.sh` / `install.ps1` 移入 `scripts/`，与 create-prd 目录结构对齐
+- 更新安装脚本内的路径引用
+- 更新 README 中安装命令和仓库结构说明
+
 ## v2.2.0（2026-04-06）
 
 ### README 全面重写

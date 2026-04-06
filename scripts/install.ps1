@@ -1,6 +1,7 @@
 # check-prd skill installer for Windows (PowerShell)
 
-$source = Split-Path -Parent $MyInvocation.MyCommand.Path
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$source = Split-Path -Parent $scriptDir
 $target = Join-Path $env:USERPROFILE ".claude\skills\check-prd"
 $python = Get-Command py -ErrorAction SilentlyContinue
 
@@ -18,9 +19,9 @@ Write-Host "Source: $source"
 Write-Host "Target: $target"
 
 if ($python.Name -eq "py") {
-    & py -3 (Join-Path $source "scripts\install_skill.py") --source $source --target $target
+    & py -3 (Join-Path $scriptDir "install_skill.py") --source $source --target $target
 } else {
-    & python (Join-Path $source "scripts\install_skill.py") --source $source --target $target
+    & python (Join-Path $scriptDir "install_skill.py") --source $source --target $target
 }
 
 Write-Host ""

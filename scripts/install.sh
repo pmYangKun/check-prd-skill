@@ -3,14 +3,15 @@
 
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 TARGET="$HOME/.claude/skills/check-prd"
 
 echo "Installing check-prd skill..."
 echo "Source: $ROOT"
 echo "Target: $TARGET"
 
-python3 "$ROOT/scripts/install_skill.py" --source "$ROOT" --target "$TARGET"
+python3 "$SCRIPT_DIR/install_skill.py" --source "$ROOT" --target "$TARGET"
 
 echo ""
 echo "Done!"
