@@ -15,6 +15,17 @@ check-prd 把这种审查能力工具化了。它基于《决胜B端》系列方
 
 这两本书的方法论已经在华为、京东、宝洁、工商银行等上百家企业的培训和咨询中验证过。check-prd 做的事情，就是**让 AI 用这套方法论帮你审文档**。
 
+## 新版能力：Chapter-Based Review with Fallback Dimensions
+
+最新版 `check-prd` 不再只按“14 个维度”一把梭地检查所有文档，而是先判断文档复杂度和结构，再选择最合适的评审路径：
+
+- **Path A：章节路径评审**。当 PRD 基本遵循标准 14 章结构时，按章节质量基线逐章审查
+- **Path B：降级维度路径**。当文档是自由格式、散装需求或 PPT 转写时，回退到经典 14 维审查
+- **L1-L4 复杂度判定**。先判断是配置级、规则级、模块级还是系统级，再决定哪些章节/维度应当适用
+- **本地 framework 快照**。仓库自带 `references/framework/`，无需再预装额外的共享目录
+
+这让 `check-prd` 更适合真实环境里的 mixed PRD：规范文档能按章节严查，非规范文档也不会失去评审能力。
+
 ## 14 个检查维度
 
 | # | 维度 | 检查什么 |
@@ -62,8 +73,9 @@ check-prd 在审查开始前会先做**产品定型**（商业化产品 or 企�
 ```bash
 git clone https://github.com/pmyangkun/check-prd-skill.git
 cd check-prd-skill
-bash scripts/install.sh          # Mac/Linux
-# .\scripts\install.ps1          # Windows PowerShell
+bash install.sh
+# Windows PowerShell:
+# .\install.ps1
 ```
 
 安装后直接使用：
@@ -86,6 +98,10 @@ bash scripts/install.sh          # Mac/Linux
 
 先 create，再 check，迭代优化。
 
+如果你想直接拿到**生成 + 审查 + 飞书协作闭环**，可以使用完整工作流版仓库：
+
+- `PRD Productivity Toolkit`：<https://github.com/Scofy0123/prd-productivity-toolkit>
+
 ## 社区贡献
 
 [@Scofy0123](https://github.com/Scofy0123) 基于标准版扩展了**飞书 CLI 协作版**，将 PRD 审查接入飞书文档协作闭环，支持评论回写和反馈收集。
@@ -96,11 +112,12 @@ bash scripts/install.sh          # Mac/Linux
 
 ```text
 SKILL.md                             # Claude Code skill 入口
+references/framework/                # 内置质量基线快照（L1-L4 + G1/G2/G3 + 章节标准）
 references/dimensions/               # 14 个维度的源文件
 references/appendices/               # 风险清单与报告模板
 dist/check-prd-universal-prompt.md   # 通用 Prompt（直接拿去用）
+install.sh / install.ps1             # 安装脚本（Mac/Linux / Windows）
 scripts/
-  install.sh / install.ps1           # 安装脚本（Mac/Linux / Windows）
   install_skill.py                   # 安装核心逻辑
   build.py                           # 重新生成通用 Prompt
   validate.py                        # 校验结构和生成物

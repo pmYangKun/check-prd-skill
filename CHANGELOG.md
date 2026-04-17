@@ -1,31 +1,40 @@
 # CHANGELOG
 
-## v2.2.1（2026-04-06）
+## v3.1.0（2026-04-18）
 
-### 目录结构整理
+将章节级质量框架快照内置到仓库中，并让分发产物保持自包含。
 
-- 将根目录 `install.sh` / `install.ps1` 移入 `scripts/`，与 create-prd 目录结构对齐
-- 更新安装脚本内的路径引用
-- 更新 README 中安装命令和仓库结构说明
+### 可用性升级
 
-## v2.2.0（2026-04-06）
+- **内置 framework 快照**：新增 `references/framework/`，包含 L1-L4 判定、G1/G2/G3 全局检查和章节质量标准
+- **移除外部目录依赖**：`SKILL.md` 从本地 `references/framework/` 加载章节基线，不再依赖外部共享 framework 目录
+- **通用 Prompt 重新打包**：`dist/check-prd-universal-prompt.md` 现在包含 SKILL 流程、framework 文件、14 维降级文件和附录，单文件即可运行
+- **完整工作流入口**：README 增加 `PRD Productivity Toolkit` 链接，便于获取 create/check/Feishu 协作全套能力
 
-### README 全面重写
+## v3.0.0（2026-04-17）
 
-- 重写开头，突出痛点和价值主张："写PRD的人很多，能系统审PRD的人很少"
-- 强化方法论权威性说明（豆瓣8.6分、重印13次、上百家企业验证）
-- 14个检查维度展开为表格，每个维度说明检查内容
-- 新增"区分产品类型，针对性审查"章节——商业化产品与企业自研系统自动调整检查重点
-- 新增与 create-prd 的闭环说明
-- 整体结构重组，突出快速开始路径
+引入统一章节 × L 级复杂度质量框架（V2），SKILL.md 全面重构。
 
-## v2.1.0（2026-04-02）
+### 核心架构变化
 
-### README 重写
+- **Path A / Path B 分流**：Phase 0 识别 PRD 结构，标准 14 章骨架走 Path A（章节路径），自由格式文档走 Path B（降级维度路径）
+- **引入共享 prd-quality-framework**：L1-L4 复杂度分级、G1/G2/G3 全局检查统一从 `references/framework/` 渐进加载，与 `create-prd` 共享同一质量基线
+- **渐进加载强制要求**：只在当前阶段加载所需框架文件，不预读整个框架
 
-- 新增"快速开始"章节，突出 `dist/check-prd-universal-prompt.md` 的使用方式
-- 明确标注适用于 ChatGPT、Gemini、DeepSeek、Kimi、通义千问等任意大模型，无需安装任何工具
-- Claude Code 安装说明降为二级内容，避免非 Claude 用户被劝退
+### Path A（章节路径）— 新增
+
+- Phase 0 三步：L 级判定 → G1 产品类型 → 结构识别分流，显式输出 `评审预设` 块
+- 按 L 级裁剪章节（`complexity-assessment.md §3`），跳过不适用章节
+- 逐章加载 `prd-quality-framework/chapters/chN-*.md`，评级格式 `Ch{N} - 评级：[优秀/合格/待改进/严重缺失]`
+- Ch10.2 强制执行逐页面/弹窗/表单走查
+- Phase 6 终局综合：G2 文档结构完整性 + G3 重大风险 R1-R8
+
+### Path B（降级维度路径）— 沿用并升级
+
+- 沿用原 14 维度文件，格式改为 `维度 N - 评级：...`，不使用章节 ID
+- Phase 6 G2 降级为"问题/目标/方案链路是否贯通"整体评估
+- 报告末尾强制输出迁移建议：使用 `/create-prd` 重写为标准格式
+- `appendix-veto.md` 顶部 R1-R8 声明已迁移至 `g3-major-risks.md`
 
 ## v2.0.0（2026-03-29）
 
