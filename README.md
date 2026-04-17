@@ -1,112 +1,138 @@
-# check-prd — B端 PRD 质量检查
+# check-prd — B端 PRD 质量审查
 
-一套系统化的 B端 PRD / 需求文档 / SaaS 产品方案质量检查框架，覆盖 14 个维度。
+> **让 AI 用行业经典方法论帮你审 PRD。**
 
-基于《决胜B端（第二版）》《决胜体验设计》《决胜B端PRD模板 v2.0》构建。
+写 PRD 的人很多，能系统审 PRD 的人很少。审一份 PRD 需要同时具备业务理解、产品架构、数据建模、交互设计、商业分析等多个维度的判断力——这种能力通常需要十年以上的实战经验。
 
-## 快速开始（任意大模型均可使用）
+check-prd 把这种审查能力工具化了。它基于《决胜B端》系列方法论，用 **14 个维度**逐项检查你的 PRD，指出遗漏、矛盾和风险，给出具体的改进建议。
 
-**不需要安装任何工具。** 只需一个文件，适用于 ChatGPT、Gemini、DeepSeek、Kimi、通义千问等任意大模型：
+## 为什么这套审查框架有效
+
+因为它不是凭空编出来的 checklist，而是从两本经过市场验证的方法论著作中提炼的：
+
+- **《决胜B端（第二版）》** — 豆瓣 8.6 分，重印 13 次，B端从业者经典案头参考书。覆盖业务调研、产品定位、架构设计、数据建模、流程设计、需求管理的完整方法论
+- **《决胜体验设计》** — 聚焦 B端体验设计，从交互原则到用户旅程到 AI 交互模式的系统框架
+
+这两本书的方法论已经在华为、京东、宝洁、工商银行等上百家企业的培训和咨询中验证过。check-prd 做的事情，就是**让 AI 用这套方法论帮你审文档**。
+
+## 新版能力：Chapter-Based Review with Fallback Dimensions
+
+最新版 `check-prd` 不再只按“14 个维度”一把梭地检查所有文档，而是先判断文档复杂度和结构，再选择最合适的评审路径：
+
+- **Path A：章节路径评审**。当 PRD 基本遵循标准 14 章结构时，按章节质量基线逐章审查
+- **Path B：降级维度路径**。当文档是自由格式、散装需求或 PPT 转写时，回退到经典 14 维审查
+- **L1-L4 复杂度判定**。先判断是配置级、规则级、模块级还是系统级，再决定哪些章节/维度应当适用
+- **本地 framework 快照**。仓库自带 `references/framework/`，无需再预装额外的共享目录
+
+这让 `check-prd` 更适合真实环境里的 mixed PRD：规范文档能按章节严查，非规范文档也不会失去评审能力。
+
+## 14 个检查维度
+
+| # | 维度 | 检查什么 |
+|---|------|---------|
+| 1 | 业务调研 | 业务背景是否清晰、利益方是否识别完整、业务流程是否梳理到位 |
+| 2 | 产品定型 | 产品类型判断是否准确、商业属性是否明确 |
+| 3 | 产品定位 | 价值主张是否清晰、目标客群是否聚焦、竞争差异是否成立 |
+| 4 | 场景分析 | 核心场景是否覆盖、用户旅程是否完整、痛点是否识别到位 |
+| 5 | 文档结构 | PRD 结构是否完整、章节逻辑是否自洽 |
+| 6 | 产品架构 | 应用架构是否合理、模块划分是否清晰、系统边界是否明确 |
+| 7 | 数据模型 | ER 模型是否完整、实体关系是否正确、关键字段是否定义 |
+| 8 | 流程设计 | 业务流程是否完整、状态机是否覆盖、异常路径是否考虑 |
+| 9 | 交互体验 | 页面设计是否合理、操作路径是否高效、反馈机制是否完善 |
+| 10 | 商业分析 | 盈利模式是否可行、ROI 是否测算、市场定位是否合理 |
+| 11 | MVP 策略 | 最小可行产品范围是否合理、验证假设是否明确 |
+| 12 | 异常处理 | 边界条件是否考虑、错误处理是否完善、降级方案是否设计 |
+| 13 | AI 功能 | AI 功能设计是否合理、人机协同边界是否清晰（有 AI 功能时适用） |
+| 14 | 运营计划 | 上线推广方案是否完整、监控指标是否定义、迭代策略是否明确 |
+
+每个维度独立输出检查结论，最后汇总为 P0-P3 分级的问题清单和 Top 10 改进建议。
+
+### 区分产品类型，针对性审查
+
+B端自研系统和商业化软件的设计逻辑差异很大——自研系统关注流程效率和内部协同，商业化产品关注市场定位和盈利模式。用同一套标准审两类 PRD，要么漏检、要么误判。
+
+check-prd 在审查开始前会先做**产品定型**（商业化产品 or 企业自研 × 业务型/工具型/交易型/基础服务型），然后自动调整每个维度的检查重点和适用性：
+
+- **商业化产品**：加重商业分析、竞品定位、MVP 策略、定价模式的检查力度
+- **企业自研系统**：加重业务流程覆盖度、权限模型、数据集成、异常处理的检查力度
+- 不适用的维度自动标记跳过，不会用商业化标准去审自研系统
+
+## 快速开始
+
+### 方式一：任意大模型（不需要安装任何工具）
 
 1. 下载 [`dist/check-prd-universal-prompt.md`](dist/check-prd-universal-prompt.md)
-2. 打开你常用的大模型对话界面
-3. 先上传或粘贴你的 PRD / 需求文档
-4. 再把 `check-prd-universal-prompt.md` 的内容粘贴进去，发送即可
+2. 打开你常用的大模型（ChatGPT、Gemini、DeepSeek、Kimi、通义千问等均可）
+3. 先上传或粘贴你的 PRD
+4. 再把 `check-prd-universal-prompt.md` 的内容粘贴进去，发送
 
-模型会自动完成产品定型，逐维度输出检查分析，最后给出汇总报告。
+> 建议使用能力较强的模型（如 GPT-4o、Claude、Gemini Pro、DeepSeek-R1）以获得更好的检查效果。
 
-> 建议使用能力较强的模型（如 GPT-4o、Gemini Pro、DeepSeek-R1 等）以获得更好的检查效果。
-
-## 核心能力
-
-- 14 个检查维度，覆盖业务分析、定位、场景、结构、架构、数据、流程、交互、商业分析、MVP、运营、异常与 AI 功能
-- 逐维度即时输出，避免把所有问题堆到最后
-- 组件级交互分析，逐个检查界面、弹窗、表单和关键操作
-- 产品定型机制，根据产品类型和商业属性动态调整适用维度
-- 汇总导航报告，按 P0-P3 整理问题、亮点、重大风险项和 Top 10 改进建议
-
----
-
-## Claude Code 用户
-
-如果你使用 Claude Code，可以将本仓库安装为 skill，获得更好的集成体验。
-
-### 安装
-
-Mac / Linux:
+### 方式二：Claude Code 集成
 
 ```bash
 git clone https://github.com/pmyangkun/check-prd-skill.git
 cd check-prd-skill
 bash install.sh
+# Windows PowerShell:
+# .\install.ps1
 ```
 
-Windows PowerShell:
-
-```powershell
-git clone https://github.com/pmyangkun/check-prd-skill.git
-cd check-prd-skill
-.\install.ps1
-```
-
-安装后，skill 会以整个目录的形式出现在 `~/.claude/skills/check-prd`。
-
-### 使用
-
-显式调用：
+安装后直接使用：
 
 ```text
 /check-prd path/to/prd.pdf
 ```
 
-自动触发示例：
+或者自然语言触发：
+- "帮我审一下这个 B端 PRD"
+- "看看这份需求文档还有什么漏洞"
+- "review 这个 SaaS 产品方案"
 
-- “帮我审一下这个 B 端 PRD”
-- “请 review 这份 SaaS 产品方案”
-- “看看这个需求文档在流程、权限和异常处理上还有什么漏洞”
+## 与 create-prd 形成闭环
 
----
+| 环节 | 工具 | 作用 |
+|------|------|------|
+| 创建 | [create-prd](https://github.com/pmyangkun/create-prd-skill) | 从业务描述生成 14 章结构化 PRD 初稿 |
+| 审查 | **check-prd** | 用 14 维度逐项检查，输出问题清单和改进建议 |
+
+先 create，再 check，迭代优化。
+
+如果你想直接拿到**生成 + 审查 + 飞书协作闭环**，可以使用完整工作流版仓库：
+
+- `PRD Productivity Toolkit`：<https://github.com/Scofy0123/prd-productivity-toolkit>
+
+## 社区贡献
+
+这个分支内置了由 [@Scofy0123](https://github.com/Scofy0123) 维护的**飞书 CLI 协作版**，将 PRD 审查接入飞书文档协作闭环，支持评论回写、反馈收集、确认修改和交付判断。
+
+本轮升级已经把飞书分支的范围判断同步到新版 `check-prd`：
+
+- 评审 scope 从“维度包”升级为 **L1-L4 + 章节包**
+- `review-policy.config.json` 使用 `schema_version: 2.0`
+- 变体路径和 skill id 继续保持 `variants/feishu-prd-review-loop/` 与 `feishu-prd-review-loop`
+
+详见分支：[check-prd-skill 飞书 CLI 协作版](https://github.com/pmYangKun/check-prd-skill/tree/check-prd-skill飞书CLI协作版(Special-tks-to-Scofy))
 
 ## 仓库结构
 
 ```text
-dist/check-prd-universal-prompt.md   # 通用 Prompt（直接拿去用）
 SKILL.md                             # Claude Code skill 入口
+references/framework/                # 内置质量基线快照（L1-L4 + G1/G2/G3 + 章节标准）
 references/dimensions/               # 14 个维度的源文件
 references/appendices/               # 风险清单与报告模板
-scripts/build.py                     # 重新生成通用 Prompt 和 .skill 包
-scripts/validate.py                  # 校验结构和生成物
-scripts/install_skill.py             # 安装到 ~/.claude/skills/check-prd
+dist/check-prd-universal-prompt.md   # 通用 Prompt（直接拿去用）
+install.sh / install.ps1             # 安装脚本（Mac/Linux / Windows）
+scripts/
+  install_skill.py                   # 安装核心逻辑
+  build.py                           # 重新生成通用 Prompt
+  validate.py                        # 校验结构和生成物
 evals/                               # eval 种子
 ```
 
-## 社区贡献：飞书 CLI 协作版
-
-[@Scofy0123](https://github.com/Scofy0123) 基于标准版 `check-prd` 扩展了一个飞书协作变体，将 PRD 评审能力接入飞书文档协作闭环，支持评论回写、反馈收集、确认修改、交付判断等流程能力。感谢他的贡献！
-
-- 变体目录：[variants/feishu-prd-review-loop/](variants/feishu-prd-review-loop/)
-- 设计说明：[docs/feishu-cli-collaboration-proposal.md](docs/feishu-cli-collaboration-proposal.md)
-
-该变体复用 `check-prd` 作为评审引擎，作为独立分支维护，不影响主分支的默认安装。
-
-## 构建与校验
-
-如果修改了维度源文件，需要重新生成通用 Prompt：
-
-```bash
-python3 scripts/build.py     # 生成 dist/check-prd-universal-prompt.md 和 dist/check-prd.skill
-python3 scripts/validate.py  # 校验结构
-```
-
-## 理论依据
-
-- **《决胜B端（第二版）》**：业务调研、定位、架构设计、数据建模、流程设计、项目管理
-- **《决胜体验设计》**：体验设计方法、交互设计原则、AI 功能设计
-- **《决胜B端PRD模板 v2.0》**：标准化 PRD 结构和关键章节
-
 ## 关于作者
 
-**杨堃**，《决胜B端》作者，B端产品专家，资深咨询顾问与培训讲师。中国科学院大学 MBA 特聘企业导师，服务客户涵盖华为、京东、宝洁等企业。
+**杨堃**，《决胜B端》（豆瓣 8.6 分，重印 13 次）作者，B端产品专家。中国科学院大学 MBA 特聘企业导师，服务客户涵盖华为、京东、百度、宝洁、工商银行等上百家企业。
 
 ## 版本历史
 

@@ -1,24 +1,50 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "2.0",
+  "_migration_note": "v1.0→v2.0: 评审分包从「小/中/大需求×维度编号」改为「L1-L4×章节ID」，与 prd-quality-framework 对齐",
   "review_profiles": {
-    "small": {
-      "label": "小需求",
-      "default_dimensions": ["01", "04", "05", "08", "09", "12"]
+    "L1": {
+      "label": "L1（配置级）",
+      "complexity_level": 1,
+      "default_chapters": ["ch10-2", "ch10-3", "ch14"],
+      "global_checks": ["G1"],
+      "triggered_chapters": [],
+      "notes": "仅配置/文案/样式/阈值变更，无新页面/实体/角色"
     },
-    "medium": {
-      "label": "中需求",
-      "default_dimensions": ["01", "04", "05", "06", "08", "09", "11", "12"],
-      "triggered_dimensions": ["07", "10", "13", "14"]
+    "L2": {
+      "label": "L2（规则级）",
+      "complexity_level": 2,
+      "default_chapters": ["ch01", "ch02", "ch06", "ch10-1", "ch10-2", "ch10-3", "ch14"],
+      "global_checks": ["G1"],
+      "optional_chapters": [],
+      "triggered_chapters": ["ch03", "ch11", "ch12", "ch13"],
+      "notes": "修改/新增业务规则，L2 起 ch10-1 必须有流程图"
     },
-    "large": {
-      "label": "大需求",
-      "default_dimensions": "all_applicable"
+    "L3": {
+      "label": "L3（模块级）",
+      "complexity_level": 3,
+      "default_chapters": ["ch01", "ch02", "ch04", "ch05", "ch06", "ch10-1", "ch10-2", "ch10-3", "ch12", "ch13", "ch14"],
+      "global_checks": ["G1", "G2"],
+      "optional_chapters": ["ch11"],
+      "triggered_chapters": ["ch03", "ch07", "ch08-09"],
+      "notes": "新增页面/实体/角色权限，5-8页模块PRD"
+    },
+    "L4": {
+      "label": "L4（系统级）",
+      "complexity_level": 4,
+      "default_chapters": [
+        "ch01", "ch02", "ch03", "ch04", "ch05", "ch06", "ch07",
+        "ch08-09", "ch10-1", "ch10-2", "ch10-3", "ch11", "ch12", "ch13", "ch14"
+      ],
+      "global_checks": ["G1", "G2", "G3"],
+      "optional_chapters": [],
+      "triggered_chapters": [],
+      "notes": "0-1 新系统/业务域/子系统，完整14章PRD"
     }
   },
   "force_check_rules": [
     {
-      "dimension_id": "07",
-      "dimension_name": "数据建模质量",
+      "chapter_ids": ["ch10-1"],
+      "check_name": "数据结构变化",
       "trigger_label": "数据结构变化",
       "signals": [
         "新增数据实体",
@@ -34,8 +60,8 @@
       ]
     },
     {
-      "dimension_id": "06",
-      "dimension_name": "架构设计质量",
+      "chapter_ids": ["ch10-1"],
+      "check_name": "系统结构变化",
       "trigger_label": "系统结构变化",
       "signals": [
         "跨模块联动",
@@ -46,8 +72,8 @@
       ]
     },
     {
-      "dimension_id": "13",
-      "dimension_name": "AI 功能设计质量",
+      "chapter_ids": ["ch10-2"],
+      "check_name": "AI功能设计",
       "trigger_label": "智能能力",
       "signals": [
         "AI",
@@ -60,8 +86,8 @@
       ]
     },
     {
-      "dimension_id": "10",
-      "dimension_name": "商业分析深度",
+      "chapter_ids": ["ch03"],
+      "check_name": "商业规则变化",
       "trigger_label": "商业规则变化",
       "signals": [
         "定价",
@@ -74,8 +100,8 @@
       ]
     },
     {
-      "dimension_id": "08",
-      "dimension_name": "流程与角色设计",
+      "chapter_ids": ["ch10-1", "ch12"],
+      "check_name": "流转与责任变化",
       "trigger_label": "流转与责任变化",
       "signals": [
         "角色变化",
@@ -86,8 +112,8 @@
       ]
     },
     {
-      "dimension_id": "09",
-      "dimension_name": "交互设计质量",
+      "chapter_ids": ["ch10-2"],
+      "check_name": "界面与操作变化",
       "trigger_label": "界面与操作变化",
       "signals": [
         "页面变化",
@@ -100,8 +126,8 @@
       ]
     },
     {
-      "dimension_id": "14",
-      "dimension_name": "运营方案与效果跟踪",
+      "chapter_ids": ["ch11", "ch13"],
+      "check_name": "上线后效果闭环",
       "trigger_label": "上线后效果闭环",
       "signals": [
         "推广",
@@ -118,19 +144,22 @@
     "待改进": 60,
     "严重缺失": 30
   },
-  "dimension_weights": {
-    "01": 1.0,
-    "04": 1.0,
-    "05": 1.0,
-    "06": 1.0,
-    "07": 1.0,
-    "08": 1.0,
-    "09": 1.0,
-    "10": 1.0,
-    "11": 1.0,
-    "12": 1.0,
-    "13": 1.0,
-    "14": 1.0
+  "chapter_weights": {
+    "ch01": 1.0,
+    "ch02": 1.0,
+    "ch03": 1.0,
+    "ch04": 1.0,
+    "ch05": 1.0,
+    "ch06": 1.0,
+    "ch07": 1.0,
+    "ch08-09": 0.5,
+    "ch10-1": 1.5,
+    "ch10-2": 1.5,
+    "ch10-3": 1.0,
+    "ch11": 1.0,
+    "ch12": 1.0,
+    "ch13": 1.0,
+    "ch14": 0.5
   },
   "delivery_gate": {
     "required_conditions": [

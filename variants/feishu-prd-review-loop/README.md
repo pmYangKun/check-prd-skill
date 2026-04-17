@@ -6,7 +6,7 @@
 
 它不替代根目录的 `check-prd`，而是把 `check-prd` 的 PRD 评审能力包进飞书文档协作闭环里，补上这些流程能力：
 
-- 飞书 PRD 范围判断与维度裁剪
+- 飞书 PRD 范围判断与 L1-L4 章节裁剪
 - 按划词评论把问题写回文档
 - 读取评论线程中的 `采纳 / 不采纳`
 - 在改正文前追加 `待确认修改方案`
@@ -20,6 +20,13 @@
 - 已安装 `lark-cli`
 - 具备 Feishu `UAT(user)` 文档访问能力
 - 愿意为评论、正文修改和反馈库写入配置相应 scopes
+
+## 本次升级
+
+- 评审分包从“小/中/大需求 + 维度编号”升级为 **L1-L4 + 章节 ID**
+- 章节范围与根目录 `check-prd` 的新版 Path A / Path B 审查逻辑对齐
+- `review-policy.config.json` 升级到 `schema_version: 2.0`
+- 保持原有路径 `variants/feishu-prd-review-loop/` 和 skill id `feishu-prd-review-loop` 不变，避免现有调用断裂
 
 ## 维护建议
 

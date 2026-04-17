@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import zipfile
 from pathlib import Path
 
@@ -10,8 +11,30 @@ ROOT = Path(__file__).resolve().parents[1]
 DIST_DIR = ROOT / "dist"
 UNIVERSAL_PROMPT = DIST_DIR / "check-prd-universal-prompt.md"
 SKILL_PACKAGE = DIST_DIR / "check-prd.skill"
+FRAMEWORK_DIR = ROOT / "references" / "framework"
 
 SECTION_ORDER = [
+    ROOT / "SKILL.md",
+    FRAMEWORK_DIR / "README.md",
+    FRAMEWORK_DIR / "complexity-assessment.md",
+    FRAMEWORK_DIR / "global-checks" / "g1-product-type-fit.md",
+    FRAMEWORK_DIR / "global-checks" / "g2-document-structure.md",
+    FRAMEWORK_DIR / "global-checks" / "g3-major-risks.md",
+    FRAMEWORK_DIR / "chapters" / "ch01-background.md",
+    FRAMEWORK_DIR / "chapters" / "ch02-basic.md",
+    FRAMEWORK_DIR / "chapters" / "ch03-commercial.md",
+    FRAMEWORK_DIR / "chapters" / "ch04-goals.md",
+    FRAMEWORK_DIR / "chapters" / "ch05-overview.md",
+    FRAMEWORK_DIR / "chapters" / "ch06-scope.md",
+    FRAMEWORK_DIR / "chapters" / "ch07-risks.md",
+    FRAMEWORK_DIR / "chapters" / "ch08-09-terms.md",
+    FRAMEWORK_DIR / "chapters" / "ch10-1-framework.md",
+    FRAMEWORK_DIR / "chapters" / "ch10-2-detail.md",
+    FRAMEWORK_DIR / "chapters" / "ch10-3-exception.md",
+    FRAMEWORK_DIR / "chapters" / "ch11-tracking.md",
+    FRAMEWORK_DIR / "chapters" / "ch12-permissions.md",
+    FRAMEWORK_DIR / "chapters" / "ch13-operations.md",
+    FRAMEWORK_DIR / "chapters" / "ch14-tbd.md",
     ROOT / "references" / "universal-prompt-intro.md",
     ROOT / "references" / "dimensions" / "check-prd-01-business.md",
     ROOT / "references" / "dimensions" / "check-prd-02-product-type.md",
@@ -34,16 +57,27 @@ SECTION_ORDER = [
 IGNORE_PARTS = {
     ".git",
     "dist",
-    "docs",
-    "variants",
     "__pycache__",
     ".pytest_cache",
     ".mypy_cache",
     ".DS_Store",
 }
 
+SKILL_LINK_PATTERN = re.compile(r"\[([^\]]+)\]\((references/[^)#]+)\)")
 
-def clean_section(text: str) -> str:
+
+def clean_skill(text: str) -> str:
+    if text.startswith("---"):
+        end = text.index("---", 3)
+        text = text[end + 3 :].strip()
+    return SKILL_LINK_PATTERN.sub(r"\1", text).strip() + "\n"
+
+
+def clean_section(path: Path) -> str:
+    text = path.read_text(encoding="utf-8")
+    if path.name == "SKILL.md":
+        return clean_skill(text)
+
     lines = text.strip().splitlines()
     if len(lines) > 1 and lines[1].startswith("> Supporting reference"):
         lines.pop(1)
@@ -54,10 +88,7 @@ def clean_section(text: str) -> str:
 
 def build_universal_prompt(output_path: Path = UNIVERSAL_PROMPT) -> Path:
     DIST_DIR.mkdir(parents=True, exist_ok=True)
-    parts = []
-    for section in SECTION_ORDER:
-        parts.append(clean_section(section.read_text(encoding="utf-8")))
-    output_path.write_text("\n\n---\n\n".join(parts) + "\n", encoding="utf-8")
+    output_path.write_text("\n\n---\n\n".join(clean_section(section) for section in SECTION_ORDER) + "\n", encoding="utf-8")
     return output_path
 
 
