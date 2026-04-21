@@ -16,7 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "feedback-log.config.json"
-DEFAULT_DOC_URL = "https://example.feishu.cn/wiki/replace-with-your-test-doc"
+DEFAULT_DOC_URL = "https://ycnh94bfa482.feishu.cn/wiki/AYPDwZALoiiWTpk1VfQcJhmOnng"
 DEFAULT_TIMEOUT_SECONDS = 30
 SHANGHAI_TZ = timezone.utc
 
@@ -1168,11 +1168,7 @@ def run_suite(ctx: TestContext) -> dict[str, Any]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run reply-first online Feishu integration regression.")
-    parser.add_argument(
-        "--doc-url",
-        default=DEFAULT_DOC_URL,
-        help="Test wiki/doc URL. Replace the default example URL with a real Feishu test document.",
-    )
+    parser.add_argument("--doc-url", default=DEFAULT_DOC_URL)
     parser.add_argument("--quiet", action="store_true")
     parser.add_argument("--cleanup", choices=["auto"], default="auto")
     parser.add_argument("--output-json")

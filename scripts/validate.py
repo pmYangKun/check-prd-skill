@@ -13,7 +13,11 @@ BUILD_SCRIPT = ROOT / "scripts" / "build.py"
 DIST_PROMPT = ROOT / "dist" / "check-prd-universal-prompt.md"
 DIST_SKILL = ROOT / "dist" / "check-prd.skill"
 
-LEGACY_PATTERN = "~/.claude/skills/check-prd-"
+LEGACY_PATTERNS = [
+    "~/.claude/skills/check-prd-",
+    "~/.claude/skills/prd-quality-framework/",
+    "~/.agents/skills/check-prd/",
+]
 LINK_PATTERN = re.compile(r"\((references/[^)#]+)\)")
 
 
@@ -45,7 +49,8 @@ def validate_legacy_paths() -> None:
     for path in iter_text_files():
         if path.resolve() == Path(__file__).resolve():
             continue
-        if LEGACY_PATTERN in path.read_text(encoding="utf-8"):
+        text = path.read_text(encoding="utf-8")
+        if any(pattern in text for pattern in LEGACY_PATTERNS):
             offenders.append(str(path.relative_to(ROOT)))
     if offenders:
         raise SystemExit(f"Found legacy hard-coded skill paths in: {offenders}")

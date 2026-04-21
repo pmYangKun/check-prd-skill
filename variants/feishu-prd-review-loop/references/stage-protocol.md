@@ -16,7 +16,7 @@ Classify the PRD as `小需求 / 中需求 / 大需求`, choose the actual revie
 ### Required flow
 
 1. Confirm this is a Feishu document task.
-2. Default to `UAT(user)`.
+2. Default to user-authenticated `lark-cli` access. Record the auth path as `UAT(user)` when a run log or Base row needs that fixed label.
 3. Resolve the document:
    - `/wiki/` -> `lark-cli wiki spaces get_node --params '{"token":"..."}'`
    - extract `node.obj_type` and `node.obj_token`
