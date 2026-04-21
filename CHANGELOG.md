@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## community/complexity-aware 分支本地化（2026-04-18）
+
+将本分支中的英文内容统一汉化，保持文档语言一致性：
+
+- `install.sh` / `install.ps1`：输出提示汉化；删除 `scripts/` 下重复的老版本
+- `SKILL.md`：Phase 0/Path A/Path B/Output Contract/Working Style 等段落汉化；frontmatter description 保留中英混合（Claude Code 触发匹配需要）
+- `README.md`：二级标题"Chapter-Based Review with Fallback Dimensions"改为"按章节评审 + 降级维度路径"；个别英文表述汉化
+- 保留的英文：专业术语（L1-L4、Path A/B、Phase 0-6、RBAC、ER、API、SMART、Mermaid 等）、文件名、命令符号
+
+> 说明：本分支托管 @Scofy0123 贡献的复杂度感知扩展版本，与 main 分支独立。
+
 ## v3.1.0（2026-04-18）
 
 将章节级质量框架快照内置到仓库中，并让分发产物保持自包含。
