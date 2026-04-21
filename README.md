@@ -75,7 +75,7 @@ bash scripts/install.sh          # Mac/Linux
 或者自然语言触发：
 - "帮我审一下这个 B端 PRD"
 - "看看这份需求文档还有什么漏洞"
-- "review 这个 SaaS 产品方案"
+- "评一下这个 SaaS 产品方案"
 
 ## 与 create-prd 形成闭环
 
@@ -88,9 +88,33 @@ bash scripts/install.sh          # Mac/Linux
 
 ## 社区贡献
 
-[@Scofy0123](https://github.com/Scofy0123) 基于标准版扩展了**飞书 CLI 协作版**，将 PRD 审查接入飞书文档协作闭环，支持评论回写和反馈收集。
+感谢 [@Scofy0123](https://github.com/Scofy0123) 的持续贡献！除了 main 分支的标准版本外，仓库还提供两个**社区扩展分支**供有不同需求的用户选用：
 
-详见分支：[check-prd-skill 飞书 CLI 协作版](https://github.com/pmYangKun/check-prd-skill/tree/check-prd-skill飞书CLI协作版(Special-tks-to-Scofy))
+| 分支 | 作者 | 特色 |
+|------|------|------|
+| `main` | 杨堃 | 标准版——固定 14 维度 PRD 审查 |
+| [`community/complexity-aware`](https://github.com/pmYangKun/check-prd-skill/tree/community/complexity-aware) | @Scofy0123 扩展 | 复杂度感知版——先判 L1-L4 需求等级，规范 PRD 走章节路径，非规范文档降级到 14 维度路径 |
+| [`飞书 CLI 协作版`](https://github.com/pmYangKun/check-prd-skill/tree/check-prd-skill飞书CLI协作版(Special-tks-to-Scofy)) | @Scofy0123 扩展 | 飞书协作版——将 PRD 审查接入飞书文档协作闭环，支持评论回写、反馈收集、确认修改、交付判断 |
+
+### 复杂度感知版（community/complexity-aware）
+
+不再一律按 14 维度硬查。先识别 PRD 结构：
+- **Path A：章节路径**——当 PRD 按标准 14 章组织时，按章节质量基线逐章审查
+- **Path B：降级维度路径**——当文档是自由格式、散装需求、PPT 转写时，回退到经典 14 维审查
+
+并引入 **L1-L4 复杂度分级**——L1 配置级、L2 规则级、L3 模块级、L4 系统级，按等级裁剪评审深度，避免用 L4 标准去评 L1 配置卡。
+
+切换使用：
+```bash
+git checkout community/complexity-aware
+```
+
+### 飞书 CLI 协作版
+
+将 PRD 审查接入飞书文档协作闭环：自动将审查意见作为评论回写到飞书文档、按规则收集修改反馈、支持 L1-L4 章节化审查范围选择。适合团队已在飞书协作场景下使用。
+
+如果你想直接拿到**生成 + 审查 + 飞书协作闭环**的完整工作流，可以看 @Scofy0123 的独立仓库：
+- [`PRD Productivity Toolkit`](https://github.com/Scofy0123/prd-productivity-toolkit)
 
 ## 仓库结构
 
