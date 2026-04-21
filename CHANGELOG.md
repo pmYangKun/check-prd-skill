@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 飞书分支顶层文件汉化（2026-04-18）
+
+与 community/complexity-aware 分支保持一致，将飞书分支顶层的英文内容汉化：
+
+- `install.sh` / `install.ps1`：输出提示汉化
+- `SKILL.md`：Phase 0/Path A/Path B/输出规范/工作风格等段落汉化
+- `README.md`：二级标题和自然语言触发示例汉化
+- frontmatter description 保留中英混合（Claude Code 触发匹配需要）
+
+**遗留事项**：`variants/feishu-prd-review-loop/` 目录下约 1481 行英文技术文档（SKILL.md + 8 个 references 模板）**暂未全量翻译**。这部分是飞书协作流程的专业文档，翻译失真风险较高，留待有具体飞书协作客户时再定向处理。
+
 ## v3.1.0（2026-04-18）
 
 将章节级质量框架快照内置到仓库中，并让分发产物保持自包含。

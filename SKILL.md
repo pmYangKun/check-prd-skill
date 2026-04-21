@@ -5,32 +5,32 @@ description: Review B端 PRDs, requirement docs, SaaS or enterprise product spec
 
 # check-prd
 
-Use this skill to produce a rigorous, actionable review of a B端 PRD or system design document.
+对 B端 PRD 或系统设计文档进行严格、可执行的质量审查，基于共享的 `prd-quality-framework`。
 
-It supports both explicit invocation such as `/check-prd path/to/prd.pdf` and automatic invocation when the request is clearly about reviewing a PRD, requirement document, product plan, or enterprise system design.
+支持显式调用（如 `/check-prd path/to/prd.pdf`）和自动触发（当用户明确要求审查 PRD、需求文档、产品方案或企业系统设计时）。
 
-## Inputs
+## 输入
 
-- A file path passed in through `$ARGUMENTS`
-- Or pasted PRD / system design content
-- Or a partial document when that is all the user has; review based on available evidence and call out the missing context explicitly
+- 通过 `$ARGUMENTS` 传入的文件路径
+- 或用户粘贴的 PRD / 系统设计文档内容
+- 或不完整的文档（基于现有内容审查，并明确指出缺失的上下文）
 
-If arguments are present, treat them as the preferred input source:
+如有参数传入，优先作为输入源：
 
 $ARGUMENTS
 
 ---
 
-## How the review is organized
+## 审查机制
 
-This skill uses the **shared prd-quality-framework** (at `references/framework/`) as its quality backbone, with a **fallback path** for PRDs that do not follow the standard chapter structure.
+本 skill 以 `references/framework/` 下的共享 **prd-quality-framework** 作为质量基线，同时提供**降级路径**，以兼容未按标准章节结构组织的 PRD。
 
 ```
 ┌──────────────────────────┐
 │ Phase 0: 全局准备          │  ← 加载 complexity-assessment.md + g1
 │  - L 级判定               │
 │  - 产品类型 (G1)          │
-│  - 结构识别 → Path 分流    │
+│  - 结构识别 → 路径分流     │
 └────────────┬─────────────┘
              │
       ┌──────┴──────┐
@@ -45,17 +45,17 @@ This skill uses the **shared prd-quality-framework** (at `references/framework/`
 │ Phase 6: 终局综合          │  ← 加载 g2 + g3 + appendix-veto (P0-P3)
 │  - G2 文档结构完整性       │
 │  - G3 重大风险 R1-R8      │
-│  - P0-P3 对照 + Final Report │
+│  - P0-P3 对照 + 最终报告    │
 └──────────────────────────┘
 ```
 
-**Progressive loading is mandatory** — only load the framework files relevant to the current phase / chapter / dimension. Do not preload everything.
+**渐进式加载是强制要求** —— 只加载当前阶段/章节/维度需要的框架文件，不要预先加载全部。
 
 ---
 
 ## Phase 0 — 全局准备
 
-读 `references/framework/complexity-assessment.md` 完成以下三步，**不要**此时加载任何章节或维度文件：
+读 `references/framework/complexity-assessment.md` 完成以下三步，**此时不要**加载任何章节或维度文件：
 
 ### Step 1 — 判定 L 级
 
@@ -165,27 +165,27 @@ Phase 0 Step 3 判定走 Path B 时采用。原因通常是 PRD 未按 create-pr
 
 ### 维度顺序（沿用原 14 维度）
 
-#### Phase 1: Business and positioning
+#### 阶段 1：业务与定位
 1. [01 业务分析质量](references/dimensions/check-prd-01-business.md)
 2. [02 产品类型适配性](references/dimensions/check-prd-02-product-type.md)
 3. [03 产品定位合理性](references/dimensions/check-prd-03-positioning.md)
 
-#### Phase 2: Scenario and structure
+#### 阶段 2：场景与结构
 4. [04 场景分析与用户旅程](references/dimensions/check-prd-04-scenario.md)
 5. [05 文档结构完整性](references/dimensions/check-prd-05-structure.md)
 6. [06 架构设计质量](references/dimensions/check-prd-06-architecture.md)
 
-#### Phase 3: Detailed design
+#### 阶段 3：详细设计
 7. [07 数据建模质量](references/dimensions/check-prd-07-data.md)
 8. [08 流程与角色设计](references/dimensions/check-prd-08-process.md)
 9. [09 交互设计质量](references/dimensions/check-prd-09-ux.md)
 
-#### Phase 4: Value and evolution
+#### 阶段 4：价值与演进
 10. [10 商业分析深度](references/dimensions/check-prd-10-commercial.md)
 11. [11 MVP 策略与演进蓝图](references/dimensions/check-prd-11-mvp.md)
 12. [14 运营方案与效果跟踪](references/dimensions/check-prd-14-operations.md)
 
-#### Phase 5: Robustness and forward-looking checks
+#### 阶段 5：健壮性与前瞻性检查
 13. [12 异常处理与健壮性设计](references/dimensions/check-prd-12-exception.md)
 14. [13 AI 功能设计质量](references/dimensions/check-prd-13-ai.md)
 
@@ -217,19 +217,19 @@ Phase 0 Step 3 判定走 Path B 时采用。原因通常是 PRD 未按 create-pr
 
 ---
 
-## 通用 Output Contract（两条路径都遵守）
+## 通用输出规范（两条路径都遵守）
 
-### Non-negotiable behavior
+### 不可违反的行为规则
 
 - 按上面约定的顺序评审，**不要跳跃**。
 - 每完成一个章节（Path A）或一个维度（Path B）就立即输出该章节/维度的详细分析，**不要批量累积到最后**。
-- 每条 finding 必须指向 PRD 中具体位置（章节号、页面名、功能名），或明确声明证据缺失。
+- 每条发现必须指向 PRD 中具体位置（章节号、页面名、功能名），或明确声明证据缺失。
 - 对没有问题的章节/维度，也要列出 **≥ 3 条显式理由**说明"为什么无需整改"。
 
-### Minimum quality bar
+### 最低质量标准
 
-- 每个章节/维度 ≥ 3 条 concrete findings，或 3 条"为何无问题"的明确依据。
-- findings 必须锚定到真实的章节、流程、页面、字段。
+- 每个章节/维度 ≥ 3 条具体发现，或 3 条"为何无问题"的明确依据。
+- 发现必须锚定到真实的章节、流程、页面、字段。
 - 改进建议必须可立刻执行，不写"应加强""应完善"等空话。
 - Ch10.2（Path A）或维度 09（Path B）必须逐页面/弹窗/表单走查。
 
@@ -258,9 +258,9 @@ Path B 降级时，以上检查改为"PRD 整体的问题/目标/方案链路是
 
 ### Step 3 — P0-P3 常见问题对照
 
-加载 `references/appendices/check-prd-appendix-veto.md` 的"常见问题对照表"部分，用于对 findings 做 P0-P3 归档参考（注：该文件顶部的"重大风险清单 R1-R8"已被 G3 接管，不再从此处读取 R 判断）。
+加载 `references/appendices/check-prd-appendix-veto.md` 的"常见问题对照表"部分，用于对发现做 P0-P3 归档参考（注：该文件顶部的"重大风险清单 R1-R8"已被 G3 接管，不再从此处读取 R 判断）。
 
-### Step 4 — Final Report
+### Step 4 — 最终报告
 
 按 `references/appendices/check-prd-appendix-guide.md` 的模板生成最终综合报告，必须包含：
 
@@ -271,14 +271,14 @@ Path B 降级时，以上检查改为"PRD 整体的问题/目标/方案链路是
 5. **亮点记录**
 6. **Top 10 改进建议**
 
-Final Report 是在逐节详细输出之上的**导航层**，不替代 Phase 1-5 的详细输出。
+最终报告是在逐节详细输出之上的**导航层**，不替代 Phase 1-5 的详细输出。
 
 ---
 
-## Working Style
+## 工作风格
 
-- The goal is to reveal blind spots and improve the document, not to shame the author.
-- Be strict about evidence and specificity.
-- Adapt judgments to product type, L 级, and document scope.
-- If the document is partial, state what cannot be validated and continue with the evidence available.
-- **Respect progressive loading** — never read more framework files than the current phase needs.
+- 目标是发现盲区、改进文档，不是给作者难堪。
+- 对证据和具体性保持严格要求。
+- 根据产品类型、L 级和文档范围调整判断标准。
+- 如果文档不完整，说明哪些内容无法验证，然后基于现有证据继续审查。
+- **尊重渐进加载** —— 不要加载超出当前阶段所需的框架文件。
