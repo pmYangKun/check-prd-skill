@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v2.3.0（2026-05-17）
+
+### 社区扩展分支
+
+- 新增社区扩展分支 [`community/c-end-product`](https://github.com/pmYangKun/check-prd-skill/tree/community/c-end-product)，由 [@s2dongman](https://github.com/s2dongman)（申悦）贡献，把 B 端 14 维度 PRD 审查框架全面改造为 C 端版本（产品定型、维度 01-14、AI 条件维度、R1-R12 重大风险清单、P0-P3 问题参考表、快速诊断流程、最终判断 10 问），含 `dist/check-cprd-universal-prompt.md`（1421 行）
+- README 社区贡献章节重写为四分支并列（main / complexity-aware / 飞书 CLI 协作版 / c-end-product），补充 C 端版的详细改造点和切换命令
+- 修正飞书 CLI 协作版分支链接（中文 + 括号 URL-encode）
+
 ## v2.2.1（2026-04-06）
 
 ### 目录结构整理

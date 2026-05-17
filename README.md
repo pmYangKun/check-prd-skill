@@ -88,17 +88,19 @@ bash scripts/install.sh          # Mac/Linux
 
 ## 社区贡献
 
-感谢 [@Scofy0123](https://github.com/Scofy0123) 的持续贡献！除了 main 分支的标准版本外，仓库还提供两个**社区扩展分支**供有不同需求的用户选用：
+感谢社区伙伴持续把 check-prd 推到更多场景里。除了 main 分支的标准版本外，仓库提供以下**社区扩展分支**供有不同需求的用户选用：
 
 | 分支 | 作者 | 特色 |
 |------|------|------|
-| `main` | 杨堃 | 标准版——固定 14 维度 PRD 审查 |
-| [`community/complexity-aware`](https://github.com/pmYangKun/check-prd-skill/tree/community/complexity-aware) | @Scofy0123 扩展 | 复杂度感知版——先判 L1-L4 需求等级，规范 PRD 走章节路径，非规范文档降级到 14 维度路径 |
-| [`飞书 CLI 协作版`](https://github.com/pmYangKun/check-prd-skill/tree/check-prd-skill飞书CLI协作版(Special-tks-to-Scofy)) | @Scofy0123 扩展 | 飞书协作版——将 PRD 审查接入飞书文档协作闭环，支持评论回写、反馈收集、确认修改、交付判断 |
+| `main` | 杨堃 | 标准版——固定 14 维度 B 端 PRD 审查 |
+| [`community/complexity-aware`](https://github.com/pmYangKun/check-prd-skill/tree/community/complexity-aware) | [@Scofy0123](https://github.com/Scofy0123) 扩展 | 复杂度感知版——先判 L1-L4 需求等级，规范 PRD 走章节路径，非规范文档降级到 14 维度路径 |
+| [`check-prd-skill飞书CLI协作版`](https://github.com/pmYangKun/check-prd-skill/tree/check-prd-skill%E9%A3%9E%E4%B9%A6CLI%E5%8D%8F%E4%BD%9C%E7%89%88(Special-tks-to-Scofy)) | [@Scofy0123](https://github.com/Scofy0123) 扩展 | 飞书协作版——将 PRD 审查接入飞书文档协作闭环，支持评论回写、反馈收集、确认修改、交付判断 |
+| [`community/c-end-product`](https://github.com/pmYangKun/check-prd-skill/tree/community/c-end-product) | [@s2dongman](https://github.com/s2dongman)（申悦）扩展 | **C 端 PRD 版**——保留 14 维度框架、问题优先级分级、重大风险项检查机制，把 B 端审查重点全面切换到 C 端产品视角 |
 
 ### 复杂度感知版（community/complexity-aware）
 
 不再一律按 14 维度硬查。先识别 PRD 结构：
+
 - **Path A：章节路径**——当 PRD 按标准 14 章组织时，按章节质量基线逐章审查
 - **Path B：降级维度路径**——当文档是自由格式、散装需求、PPT 转写时，回退到经典 14 维审查
 
@@ -109,9 +111,33 @@ bash scripts/install.sh          # Mac/Linux
 git checkout community/complexity-aware
 ```
 
-### 飞书 CLI 协作版
+### 飞书 CLI 协作版（check-prd-skill飞书CLI协作版）
 
 将 PRD 审查接入飞书文档协作闭环：自动将审查意见作为评论回写到飞书文档、按规则收集修改反馈、支持 L1-L4 章节化审查范围选择。适合团队已在飞书协作场景下使用。
+
+### C 端 PRD 版（community/c-end-product）
+
+保留 14 维度审查框架、问题优先级分级、重大风险项检查机制，把 B 端审查重点全面切换为 C 端产品视角。主要改造：
+
+- **产品定型**：新增 C 端产品阶段、产品形态、商业模式、用户生命周期、终端形态的完整定型体系
+- **维度 01-06**：B 端业务分析 → C 端用户价值、场景、增长、MVP 视角
+- **维度 07-09**：强化 C 端用户路径、转化漏斗、信息架构、交互设计与状态反馈
+- **维度 10-11**：B 端 ER 模型 → C 端核心对象 / 状态 / 规则；强化异常、空状态与边界
+- **维度 12-14**：B 端数据指标 → C 端埋点漏斗、A/B 实验、增长运营复盘
+- **AI 条件维度**：新增专门针对 AI 功能设计质量的审查模块
+- **R1-R12 重大风险清单**：针对 C 端产品的快速风险检查
+- **P0-P3 问题参考表**：直接列出 C 端 PRD 常见问题和修复建议
+- **快速诊断流程**：时间有限时的快速检查路径
+- **最终判断标准**：合格 C 端 PRD 必须回答的 10 个问题
+
+切换使用：
+```bash
+git checkout community/c-end-product
+```
+
+或直接下载 [`dist/check-cprd-universal-prompt.md`](https://github.com/pmYangKun/check-prd-skill/blob/community/c-end-product/dist/check-cprd-universal-prompt.md) 喂给任意大模型。
+
+### 相关独立仓库
 
 如果你想直接拿到**生成 + 审查 + 飞书协作闭环**的完整工作流，可以看 @Scofy0123 的独立仓库：
 - [`PRD Productivity Toolkit`](https://github.com/Scofy0123/prd-productivity-toolkit)
