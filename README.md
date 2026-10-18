@@ -155,6 +155,7 @@ scripts/
   build.py                           # 重新生成通用 Prompt
   validate.py                        # 校验结构和生成物
 evals/                               # eval 种子
+LICENSE / NOTICE                     # 开源协议（Apache 2.0）与署名声明
 ```
 
 ## 关于作者
@@ -164,3 +165,13 @@ evals/                               # eval 种子
 ## 版本历史
 
 见 [CHANGELOG.md](CHANGELOG.md)
+
+## 许可协议
+
+本仓库采用 [Apache License 2.0](LICENSE) 开源，覆盖 main 分支的全部历史版本（包括添加协议之前已发布的版本）。社区扩展分支包含其他贡献者的修改，授权以各分支说明为准。
+
+你可以自由使用、修改和再发布（包括商用），只需做到：
+
+- 保留 [LICENSE](LICENSE) 和 [NOTICE](NOTICE) 文件，注明出处并附上本仓库链接
+- 在修改过的文件中注明已作修改
+- 派生版本不以杨堃本人或《决胜B端》官方出品的名义发布

@@ -1,0 +1,12 @@
+check-prd — B端 PRD 质量审查
+Copyright 2026 杨堃 (pmYangKun)
+https://github.com/pmYangKun/check-prd-skill
+
+本仓库 main 分支的全部历史版本（包括本文件添加之前已发布的所有版本）均按 Apache License 2.0 授权，协议全文见 LICENSE。
+community/* 等社区扩展分支包含其他贡献者的修改，其授权以各分支内的说明为准。
+
+方法论来源：杨堃《决胜B端（第二版）》《决胜体验设计》。
+
+本仓库包含 @Scofy0123 贡献的内容（PR #1，2026-03-29：Claude skill 打包结构、构建与校验脚本、eval 种子等）。
+
+基于本仓库修改或再发布时，请保留本 NOTICE 文件，并在修改过的文件中注明已作修改。
